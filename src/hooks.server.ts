@@ -20,7 +20,7 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 
 	event.locals.user = user;
 	event.locals.session = session;
-	event.locals.isAuthenticated = !!session;
+	event.locals.isAuthenticated = session ? true : false;
 	return resolve(event);
 };
 

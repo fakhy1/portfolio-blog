@@ -7,9 +7,10 @@
 	import BlogPostHeader from "$lib/components/BlogPostHeader.svelte";
 	import { PUBLIC_SITE_URL } from "$env/static/public";
 	import SeoHead from "$lib/components/SeoHead.svelte";
+	import { SearchXIcon } from "@lucide/svelte";
   
   const { data }: PageProps = $props();
-  const { params, post, enableEditor, auth } = $derived(data);
+  const { params, post, auth } = $derived(data);
 
 </script>
 
@@ -38,14 +39,17 @@
       <img class="aspect-video object-cover rounded-md w-full" src={post.image} alt={post.title}>
     </div>
     <Editor 
-      {enableEditor}
+      enableEditor={!!data.enableEditor}
       onUpdate={(html: string) => updatePostContent(params.slug, html)}
       content={post?.content}
     />
   </div>
   <Footer />
 {:else}
-  <div class="flex items-center justify-center ">
-    <p>Post not found</p>
+  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center ">
+    <span class="text-muted-foreground text-sm bg-secondary p-2 rounded-md mb-2">
+      <SearchXIcon class="size-5"/>
+    </span>
+    <p class="text-muted-foreground text-center">Post not found</p>
   </div>
 {/if}

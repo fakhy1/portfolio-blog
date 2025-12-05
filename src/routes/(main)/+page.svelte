@@ -25,7 +25,7 @@
 
 <div class="mx-auto w-full max-w-2xl min-h-screen mb-8">
     <MainHeader isAuthenticated={data.auth.isAuthenticated} bind:postsType={postsType}/>
-    <div class="w-full flex flex-col gap-2">
+    <div class="w-full flex flex-col gap-2 mt-10">
       {#if data.posts.length}
         {#each data.posts as post}
         <div class="relative mb-6 w-full rounded-md group space-y-1 group">
@@ -35,7 +35,7 @@
         </div>
         {/each}
       {:else}
-        <p>No posts found</p>
+        <p class="text-muted-foreground text-center mt-8">No posts yet.</p>
       {/if}
     </div>
 </div>

@@ -8,13 +8,13 @@ export const load = async ({ params, locals, depends }) => {
 	const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
 	return post && (post.isPublished === true || locals.isAuthenticated)
 		? {
-				post,
-				params,
-				enableEditor: locals.isAuthenticated
-			}
+			post,
+			params,
+			enableEditor: locals.isAuthenticated
+		}
 		: {
-				post: null,
-				params,
-				enableEditor: locals.isAuthenticated
-			};
+			post: null,
+			params,
+			enableEditor: locals.isAuthenticated
+		};
 };
