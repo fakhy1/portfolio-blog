@@ -13,4 +13,4 @@
 
 <ModeWatcher themeStorageKey="theme" defaultMode="system" />
 {@render children()}
-<Toaster />
+<Toaster position="top-right" />

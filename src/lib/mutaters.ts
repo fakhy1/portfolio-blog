@@ -1,15 +1,19 @@
 import { goto, invalidate } from '$app/navigation';
 import { toast } from 'svelte-sonner';
 import { fetcher } from './fetcher';
+import type { Writable } from 'svelte/store';
 
 export async function updatePostStatus({
 	slug,
-	status
+	status,
+	isUpdating
 }: {
 	slug: string;
 	status: 'publish' | 'draft';
+	isUpdating: Writable<boolean>;
 }) {
 	try {
+		isUpdating.update(() => true)
 		await fetcher<{ slug: string }>(`/posts/${slug}/${status}`, {
 			method: 'PATCH'
 		});
@@ -19,6 +23,8 @@ export async function updatePostStatus({
 	} catch (error) {
 		const err = error as Error;
 		toast.error(err.message);
+	} finally {
+		isUpdating.update(() => false)
 	}
 }
 

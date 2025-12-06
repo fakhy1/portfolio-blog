@@ -4,7 +4,7 @@
 	import { updatePostContent } from "$lib/mutaters";
 	import Footer from "$lib/components/Footer.svelte";
 	import Editor from "$lib/components/editor/Editor.svelte";
-	import BlogPostHeader from "$lib/components/BlogPostHeader.svelte";
+	import { PostHeader } from "$lib/components/post-header";
 	import { PUBLIC_SITE_URL } from "$env/static/public";
 	import SeoHead from "$lib/components/SeoHead.svelte";
 	import { SearchXIcon } from "@lucide/svelte";
@@ -24,10 +24,9 @@
 />
 
 {#if post} 
-  <BlogPostHeader
-    slug={params.slug}
-    isPublished={post.isPublished}
-    isLogin={auth.isAuthenticated}
+  <PostHeader
+    post={post}
+    hideEditButtons={!auth.isAuthenticated}
   />
   <div class="mx-auto w-full max-w-2xl min-h-screen space-y-12">
     <div class="space-y-8">
@@ -44,7 +43,9 @@
       content={post?.content}
     />
   </div>
-  <Footer />
+  {#if !data.enableEditor}
+    <Footer />
+  {/if}
 {:else}
   <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center ">
     <span class="text-muted-foreground text-sm bg-secondary p-2 rounded-md mb-2">

@@ -108,7 +108,7 @@
 </script>
 
 <Select.Root bind:value onValueChange={handleValueChange} type="single">
-  <Select.SelectTrigger class="border-none max-md:rounded-none">
+  <Select.SelectTrigger class="border-none max-md:rounded-none md:rounded-b-none">
     {selectLabel}
   </Select.SelectTrigger>
   <Select.SelectContent>
