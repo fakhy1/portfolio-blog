@@ -15,6 +15,6 @@ export const load = async ({ params, locals, depends }) => {
 		: {
 			post: null,
 			params,
-			enableEditor: locals.isAuthenticated
+			enableEditor: false
 		};
 };

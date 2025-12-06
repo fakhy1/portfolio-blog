@@ -1,8 +1,8 @@
 <script lang="ts">
-	import UrlCopyButton from "$lib/components/UrlCopyButton.svelte";
-	import PostBreadcrumb from "./PostBreadcrumb.svelte";
 	import PostEditSheet from "./PostEditSheet.svelte";
+  import PostBreadcrumb from "./PostBreadcrumb.svelte";
 	import PostStatusButton from "./PostStatusButton.svelte";
+	import UrlCopyButton from "$lib/components/UrlCopyButton.svelte";
 
   let { post, hideEditButtons } = $props();
 
@@ -13,6 +13,10 @@
   <div class="flex items-center gap-1">
     <UrlCopyButton />
     <PostEditSheet post={post} hide={hideEditButtons}/>
-    <PostStatusButton slug={post?.slug} isPublished={post?.isPublished} />
+    <PostStatusButton 
+      slug={post.slug}
+      isPublished={post.isPublished}
+      hide={hideEditButtons}
+    />
   </div>
 </header>

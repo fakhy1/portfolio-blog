@@ -3,6 +3,38 @@ import { toast } from 'svelte-sonner';
 import { fetcher } from './fetcher';
 import type { Writable } from 'svelte/store';
 
+export async function updatePost({
+	slug,
+	updates,
+	isUpdating
+}: {
+	slug: string;
+	updates: {
+		title?: string;
+		slug?: string;
+		description?: string;
+		image?: string;
+	};
+	isUpdating?: Writable<boolean>;
+}) {
+	try {
+		isUpdating?.update(() => true)
+		await fetcher<{ slug: string }>(`/posts/${slug}`, {
+			method: 'PUT',
+			body: JSON.stringify(updates)
+		});
+
+		goto(`/posts/${updates.slug}`);
+		invalidate(`path:/posts/${updates.slug}`);
+		toast.success(`Post updated.`);
+	} catch (error) {
+		const err = error as Error;
+		toast.error(err.message);
+	} finally {
+		isUpdating?.update(() => false)
+	}
+}
+
 export async function updatePostStatus({
 	slug,
 	status,
@@ -10,10 +42,10 @@ export async function updatePostStatus({
 }: {
 	slug: string;
 	status: 'publish' | 'draft';
-	isUpdating: Writable<boolean>;
+	isUpdating?: Writable<boolean>;
 }) {
 	try {
-		isUpdating.update(() => true)
+		isUpdating?.update(() => true)
 		await fetcher<{ slug: string }>(`/posts/${slug}/${status}`, {
 			method: 'PATCH'
 		});
@@ -24,7 +56,7 @@ export async function updatePostStatus({
 		const err = error as Error;
 		toast.error(err.message);
 	} finally {
-		isUpdating.update(() => false)
+		isUpdating?.update(() => false)
 	}
 }
 
@@ -43,8 +75,14 @@ export async function deletePost(slug: string) {
 }
 
 let timeoutId: NodeJS.Timeout;
-export function updatePostContent(slug: string, content: string) {
-	const SAVE_AFTER_TIME = 5000; // 5s
+export function updatePostContent({
+	slug,
+	content,
+}: {
+	slug: string;
+	content: string;
+}) {
+	const SAVE_AFTER_TIME = 2000; // 2s
 
 	if (timeoutId) clearTimeout(timeoutId);
 

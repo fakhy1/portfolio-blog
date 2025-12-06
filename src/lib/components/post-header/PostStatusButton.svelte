@@ -5,11 +5,12 @@
 	import { updatePostStatus } from "$lib/mutaters";
 	import { writable } from "svelte/store";
 
-  const {slug, isPublished } = $props()
+  const {slug, isPublished, hide } = $props()
   const isUpdating = writable(false)
 
 </script>
 
+{#if !hide}
 <Tooltip.Provider>
   <Tooltip.Root>
     <Tooltip.Trigger>
@@ -21,7 +22,7 @@
         {#if $isUpdating}
           <LoaderCircleIcon class="size-4 animate-spin" />
         {/if}
-        {#if isPublished && !$isUpdating}
+        {#if !isPublished && !$isUpdating}
           <GlobeIcon class="size-4" />
           Publish
         {:else if !$isUpdating}
@@ -30,11 +31,12 @@
         {/if}
       </Button></Tooltip.Trigger>
     <Tooltip.Content>
-      {#if isPublished}
+      {#if !isPublished && !$isUpdating}
         Publish this Post.
-      {:else}
+      {:else if !$isUpdating}
         Draft this Post.
       {/if}
     </Tooltip.Content>
   </Tooltip.Root>
 </Tooltip.Provider>
+{/if}

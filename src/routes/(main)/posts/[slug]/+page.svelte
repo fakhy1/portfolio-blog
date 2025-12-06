@@ -39,8 +39,15 @@
     </div>
     <Editor 
       enableEditor={!!data.enableEditor}
-      onUpdate={(html: string) => updatePostContent(params.slug, html)}
       content={post?.content}
+      onUpdate={
+        (html: string) => 
+        updatePostContent(
+          {
+            slug: params.slug,
+            content: html,
+          })
+      }
     />
   </div>
   {#if !data.enableEditor}
