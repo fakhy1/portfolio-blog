@@ -7,7 +7,7 @@ import z from 'zod';
 const updateSchema = z.object({
 	title: z.string().min(3).max(100),
 	slug: z.string().min(3).max(100),
-	description: z.string().min(3).max(100),
+	description: z.string().min(3).max(160),
 	image: z.url(),
 }).partial();
 
@@ -22,7 +22,7 @@ export async function PUT({ request, params, locals }) {
 
 		const { success, data, error } = updateSchema.safeParse(await request.json());
 
-		if (!success) return json({ error }, { status: 400 });
+		if (!success) return json({ error: error.issues[0].message }, { status: 400 });
 
 		await db.update(blogPosts).set(data).where(eq(blogPosts.slug, params.slug));
 
