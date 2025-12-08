@@ -34,7 +34,7 @@
           </Select.Group>
         </Select.Content>
       </Select.Root>
-      <Button size="icon-sm" onclick={() => goto("/posts/new")}><PlusIcon/></Button>
+      <Button size="icon-sm" onclick={() => goto("/blog/new")}><PlusIcon/></Button>
     </div>
   {/if}
 </div>
