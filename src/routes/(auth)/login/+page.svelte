@@ -1,5 +1,6 @@
 <script>
 	import { enhance } from "$app/forms";
+	import SeoHead from "$lib/components/SeoHead.svelte";
 	import { Button } from "$lib/components/ui/button";
 	import { Input } from "$lib/components/ui/input";
 	import { Label } from "$lib/components/ui/label";
@@ -15,6 +16,12 @@
     }
   })
 </script>
+
+<SeoHead 
+  title="Login - Blog"
+  description="Log into your account"
+/>
+
 <div class="min-h-screen w-full flex flex-col items-center justify-center">
   <div class="w-full max-w-sm space-y-4">
     <div class="text-center mb-8">

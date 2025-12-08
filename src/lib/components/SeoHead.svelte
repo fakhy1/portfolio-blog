@@ -5,7 +5,7 @@
     title: string;
     description: string;
     image?: string;
-    canonical: string;
+    canonical?: string;
     published?: string;
     modified?: string;
   } = $props();
@@ -28,8 +28,10 @@
   {#if image}
     <meta property="og:image" content={image} />
   {/if}
+  {#if canonical}
   <meta property="og:url" content={canonical} />
   <link rel="canonical" href={canonical} />
+  {/if}
   {#if published}
     <meta property="article:published_time" content={published} />
   {/if}
@@ -38,7 +40,9 @@
   {/if}
   <meta name="twitter:card" content="summary_large_image">
   <meta property="twitter:domain" content={PUBLIC_SITE_URL}>
+  {#if canonical}
   <meta property="twitter:url" content={canonical}>
+  {/if}
   <meta name="twitter:title" content={title}>
   <meta name="twitter:description" content={description}>
   {#if image}

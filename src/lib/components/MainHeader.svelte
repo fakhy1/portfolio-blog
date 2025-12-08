@@ -1,10 +1,17 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+  import { PlusIcon } from "@lucide/svelte";
   import { Button } from "$lib/components/ui/button";
-  import { EllipsisVerticalIcon } from "@lucide/svelte";
+  import * as Select from '$lib/components/ui/select';
 
   let { isAuthenticated, postsType = $bindable() } = $props();
+  const isHidden = $derived(() => !isAuthenticated);
+
+  const selectLabel = $derived(() => {
+    if (postsType === 'draft') return 'Draft';
+    if (postsType === 'published') return 'Published';
+    return 'All';
+  });
 
 </script>
 
@@ -13,28 +20,21 @@
     <h5 class="font-medium">Fakhy</h5>
     <p class="text-muted-foreground">Researcher</p>
   </div>
-  {#if isAuthenticated}
+  {#if !isHidden()}
     <div class="flex items-center gap-1">
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger>
-            <Button variant="secondary" size="icon-sm"><EllipsisVerticalIcon/></Button>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content class='w-48'>
-          <DropdownMenu.Item onclick={() => goto("/posts/new")}>New Post</DropdownMenu.Item>
-          <DropdownMenu.Separator/>
-          <DropdownMenu.Group>
-            <DropdownMenu.Label class="text-muted-foreground font-medium">Post Type</DropdownMenu.Label>
-            <DropdownMenu.RadioGroup bind:value={postsType}>
-              <DropdownMenu.RadioItem value="draft">Draft</DropdownMenu.RadioItem>
-              <DropdownMenu.RadioItem value="published">Published</DropdownMenu.RadioItem>
-            </DropdownMenu.RadioGroup>
-          </DropdownMenu.Group>
-          <DropdownMenu.Separator/>
-          <DropdownMenu.Item onclick={() => goto("/settings")}>Settings</DropdownMenu.Item>
-          <DropdownMenu.Separator/>
-          <DropdownMenu.Item onclick={() => goto("/logout")}>Logout</DropdownMenu.Item>
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
+      <Select.Root type="single" bind:value={postsType}>
+        <Select.Trigger size="sm" class="w-28" variant="secondary">
+          {selectLabel()}
+        </Select.Trigger>
+        <Select.Content class="w-48">
+          <Select.Group>
+            <Select.Label>Post Type</Select.Label>
+            <Select.Item value="draft">Draft</Select.Item>
+            <Select.Item value="published">Published</Select.Item>
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
+      <Button size="icon-sm" onclick={() => goto("/posts/new")}><PlusIcon/></Button>
     </div>
   {/if}
 </div>
