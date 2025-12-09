@@ -24,7 +24,7 @@ export async function updatePost({
 			body: JSON.stringify(updates)
 		});
 
-		goto(`/posts/${updates.slug}`);
+		goto(`/blog/${updates.slug}`);
 		invalidate(`path:/posts/${updates.slug}`);
 		toast.success(`Post updated.`);
 	} catch (error) {

@@ -18,7 +18,7 @@
   image={post?.image ?? ""}
   title={post?.title ?? "Not Found"}
   description={post?.description ?? "Not Found"}
-  canonical={`${PUBLIC_SITE_URL}/posts/${params.slug}`}
+  canonical={`${PUBLIC_SITE_URL}/blog/${params.slug}`}
   published={post?.createdAt.toISOString()}
   modified={post?.updatedAt.toISOString()}
 />
