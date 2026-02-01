@@ -18,7 +18,7 @@
 <div class="flex items-center justify-between mb-4">
   <div>
     <h5 class="font-medium">Fakhy</h5>
-    <p class="text-muted-foreground">Researcher</p>
+    <p class="text-muted-foreground">Philomath</p>
   </div>
   {#if !isHidden()}
     <div class="flex items-center gap-1">
