@@ -17,7 +17,7 @@
 
 <div class="flex items-center justify-between mb-4">
   <div>
-    <h5 class="font-medium">Fakhy</h5>
+    <h5 class="font-medium">M. Fakhar Sultan</h5>
     <p class="text-muted-foreground">Philomath</p>
   </div>
   {#if !isHidden()}
